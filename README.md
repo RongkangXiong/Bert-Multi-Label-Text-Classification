@@ -69,7 +69,7 @@ you need download pretrained bert model and xlnet model.
 
 ### training 
 
-```shell
+```python
 python run_bert.py --do_train --save_best --do_lower_case --train_batch_size 64 --eval_batch_size 64
 ```
 
