@@ -2,7 +2,7 @@
 from pathlib import Path
 BASE_DIR = Path('pybert')
 config = {
-    'raw_data_path': BASE_DIR / 'dataset/train_sample.csv',
+    'raw_data_path': BASE_DIR / 'dataset/train.csv',
     'test_path': BASE_DIR / 'dataset/test.csv',
 
     'data_dir': BASE_DIR / 'dataset',
@@ -13,9 +13,9 @@ config = {
     'cache_dir': BASE_DIR / 'model/',
     'result': BASE_DIR / "output/result",
 
-    'bert_vocab_path': BASE_DIR / 'pretrain/bert/base-uncased/bert_vocab.txt',
-    'bert_config_file': BASE_DIR / 'pretrain/bert/base-uncased/config.json',
-    'bert_model_dir': BASE_DIR / 'pretrain/bert/base-uncased',
+    'bert_vocab_path': BASE_DIR / 'pretrain/bert/bert-uncased/vocab.txt',
+    'bert_config_file': BASE_DIR / 'pretrain/bert/bert-uncased/config.json',
+    'bert_model_dir': BASE_DIR / 'pretrain/bert/bert-uncased',
 
     'xlnet_vocab_path': BASE_DIR / 'pretrain/xlnet/base-cased/spiece.model',
     'xlnet_config_file': BASE_DIR / 'pretrain/xlnet/base-cased/config.json',

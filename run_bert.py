@@ -34,11 +34,11 @@ def run_train(args):
     train_examples = processor.create_examples(lines=train_data,
                                                example_type='train',
                                                cached_examples_file=config[
-                                                    'data_dir'] / f"cached_train_examples_{args.arch}")
+                                                                        'data_dir'] / f"cached_train_examples_{args.arch}")
     train_features = processor.create_features(examples=train_examples,
                                                max_seq_len=args.train_max_seq_len,
                                                cached_features_file=config[
-                                                    'data_dir'] / "cached_train_features_{}_{}".format(
+                                                                        'data_dir'] / "cached_train_features_{}_{}".format(
                                                    args.train_max_seq_len, args.arch
                                                ))
     train_dataset = processor.create_dataset(train_features, is_sorted=args.sorted)
@@ -53,12 +53,12 @@ def run_train(args):
     valid_examples = processor.create_examples(lines=valid_data,
                                                example_type='valid',
                                                cached_examples_file=config[
-                                                'data_dir'] / f"cached_valid_examples_{args.arch}")
+                                                                        'data_dir'] / f"cached_valid_examples_{args.arch}")
 
     valid_features = processor.create_features(examples=valid_examples,
                                                max_seq_len=args.eval_max_seq_len,
                                                cached_features_file=config[
-                                                'data_dir'] / "cached_valid_features_{}_{}".format(
+                                                                        'data_dir'] / "cached_valid_features_{}_{}".format(
                                                    args.eval_max_seq_len, args.arch
                                                ))
     valid_dataset = processor.create_dataset(valid_features)
@@ -78,7 +78,7 @@ def run_train(args):
     param_optimizer = list(model.named_parameters())
     no_decay = ['bias', 'LayerNorm.weight']
     optimizer_grouped_parameters = [
-        {'params': [p for n, p in param_optimizer if not any(nd in n for nd in no_decay)],'weight_decay': args.weight_decay},
+        {'params': [p for n, p in param_optimizer if not any(nd in n for nd in no_decay)], 'weight_decay': args.weight_decay},
         {'params': [p for n, p in param_optimizer if any(nd in n for nd in no_decay)], 'weight_decay': 0.0}
     ]
     warmup_steps = int(t_total * args.warmup_proportion)
@@ -94,8 +94,8 @@ def run_train(args):
     # ---- callbacks
     logger.info("initializing callbacks")
     train_monitor = TrainingMonitor(file_dir=config['figure_dir'], arch=args.arch)
-    model_checkpoint = ModelCheckpoint(checkpoint_dir=config['checkpoint_dir'],mode=args.mode,
-                                       monitor=args.monitor,arch=args.arch,
+    model_checkpoint = ModelCheckpoint(checkpoint_dir=config['checkpoint_dir'], mode=args.mode,
+                                       monitor=args.monitor, arch=args.arch,
                                        save_best_only=args.save_best)
 
     # **************************** training model ***********************
@@ -108,13 +108,14 @@ def run_train(args):
     logger.info("  Gradient Accumulation steps = %d", args.gradient_accumulation_steps)
     logger.info("  Total optimization steps = %d", t_total)
 
-    trainer = Trainer(args= args,model=model,logger=logger,criterion=BCEWithLogLoss(),optimizer=optimizer,
-                      scheduler=scheduler,early_stopping=None,training_monitor=train_monitor,
+    trainer = Trainer(args=args, model=model, logger=logger, criterion=BCEWithLogLoss(), optimizer=optimizer,
+                      scheduler=scheduler, early_stopping=None, training_monitor=train_monitor,
                       model_checkpoint=model_checkpoint,
                       batch_metrics=[AccuracyThresh(thresh=0.5)],
                       epoch_metrics=[AUC(average='micro', task_type='binary'),
                                      MultiLabelReport(id2label=id2label)])
     trainer.train(train_data=train_dataloader, valid_data=valid_dataloader)
+
 
 def run_test(args):
     from pybert.io.task_data import TaskData
@@ -132,11 +133,11 @@ def run_test(args):
     test_examples = processor.create_examples(lines=test_data,
                                               example_type='test',
                                               cached_examples_file=config[
-                                            'data_dir'] / f"cached_test_examples_{args.arch}")
+                                                                       'data_dir'] / f"cached_test_examples_{args.arch}")
     test_features = processor.create_features(examples=test_examples,
                                               max_seq_len=args.eval_max_seq_len,
                                               cached_features_file=config[
-                                            'data_dir'] / "cached_test_features_{}_{}".format(
+                                                                       'data_dir'] / "cached_test_features_{}_{}".format(
                                                   args.eval_max_seq_len, args.arch
                                               ))
     test_dataset = processor.create_dataset(test_features)
@@ -189,7 +190,7 @@ def main():
     parser.add_argument('--fp16_opt_level', type=str, default='O1')
     args = parser.parse_args()
 
-    init_logger(log_file=config['log_dir'] / f'{args.arch}-{time.strftime("%Y-%m-%d-%H:%M:%S", time.localtime())}.log')
+    init_logger(log_file=config['log_dir'] / f'{args.arch}-{time.strftime("%Y-%m-%d-%H-%M-%S", time.localtime())}.log')
     config['checkpoint_dir'] = config['checkpoint_dir'] / args.arch
     config['checkpoint_dir'].mkdir(exist_ok=True)
     # Good practice: save your training arguments together with the trained model

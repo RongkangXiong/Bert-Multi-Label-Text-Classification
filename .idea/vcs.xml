@@ -2,5 +2,8 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/pybert/pretrain/bert/bert-base-multilingual-uncased" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/pybert/pretrain/bert/bert-uncased" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/pybert/pretrain/bert/bertl-uncased" vcs="Git" />
   </component>
 </project>

@@ -5,18 +5,20 @@ from ..common.tools import save_pickle
 from ..common.tools import logger
 from ..callback.progressbar import ProgressBar
 
+
 class TaskData(object):
     def __init__(self):
         pass
-    def train_val_split(self,X, y,valid_size,stratify=False,shuffle=True,save = True,
-                        seed = None,data_name = None,data_dir = None):
-        pbar = ProgressBar(n_total=len(X),desc='bucket')
+
+    def train_val_split(self, X, y, valid_size, stratify=False, shuffle=True, save=True,
+                        seed=None, data_name=None, data_dir=None):
+        pbar = ProgressBar(n_total=len(X), desc='bucket')
         logger.info('split raw data into train and valid')
         if stratify:
             num_classes = len(list(set(y)))
             train, valid = [], []
             bucket = [[] for _ in range(num_classes)]
-            for step,(data_x, data_y) in enumerate(zip(X, y)):
+            for step, (data_x, data_y) in enumerate(zip(X, y)):
                 bucket[int(data_y)].append((data_x, data_y))
                 pbar(step=step)
             del X, y
@@ -35,7 +37,7 @@ class TaskData(object):
                 random.shuffle(train)
         else:
             data = []
-            for step,(data_x, data_y) in enumerate(zip(X, y)):
+            for step, (data_x, data_y) in enumerate(zip(X, y)):
                 data.append((data_x, data_y))
                 pbar(step=step)
             del X, y
@@ -53,11 +55,11 @@ class TaskData(object):
         if save:
             train_path = data_dir / f"{data_name}.train.pkl"
             valid_path = data_dir / f"{data_name}.valid.pkl"
-            save_pickle(data=train,file_path=train_path)
-            save_pickle(data = valid,file_path=valid_path)
+            save_pickle(data=train, file_path=train_path)
+            save_pickle(data=valid, file_path=valid_path)
         return train, valid
 
-    def read_data(self,raw_data_path,preprocessor = None,is_train=True):
+    def read_data(self, raw_data_path, preprocessor=None, is_train=True):
         '''
         :param raw_data_path:
         :param skip_header:
@@ -70,11 +72,11 @@ class TaskData(object):
             if is_train:
                 target = row[2:]
             else:
-                target = [-1,-1,-1,-1,-1,-1]
+                target = [-1, -1, -1, -1, -1, -1]
             sentence = str(row[1])
             if preprocessor:
                 sentence = preprocessor(sentence)
             if sentence:
                 targets.append(target)
                 sentences.append(sentence)
-        return targets,sentences
+        return targets, sentences
