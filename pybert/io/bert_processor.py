@@ -1,4 +1,6 @@
 import csv
+import os
+
 import torch
 import numpy as np
 from ..common.tools import load_pickle
@@ -89,7 +91,7 @@ class BertProcessor(object):
         Creates examples for data
         '''
         pbar = ProgressBar(n_total=len(lines), desc='create examples')
-        if cached_examples_file.exists():
+        if os.path.exists(cached_examples_file):
             logger.info("Loading examples from cached file %s", cached_examples_file)
             examples = torch.load(cached_examples_file)
         else:
@@ -121,7 +123,7 @@ class BertProcessor(object):
         #  type_ids:   0   0   0   0  0     0   0
         '''
         pbar = ProgressBar(n_total=len(examples), desc='create features')
-        if cached_features_file.exists():
+        if os.path.exists(cached_features_file):
             logger.info("Loading features from cached file %s", cached_features_file)
             features = torch.load(cached_features_file)
         else:

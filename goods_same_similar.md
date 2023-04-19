@@ -33,3 +33,13 @@ python run_bert.py --do_test
 --train_max_seq_len 512 
 --eval_max_seq_len 512
 ```
+
+
+# 导出requirements
+```shell
+pip freeze > requirements_raw.txt
+```
+
+```shell
+python filter_dependencies.py requirements_raw.txt requirements.txt
+```
