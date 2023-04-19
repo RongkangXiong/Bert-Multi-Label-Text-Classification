@@ -2,8 +2,18 @@
 进入 `cd ./pybert/pretrain/bert`,然后执行下载预训练模型
 
 ```shell
+# Ubuntu / Debian
+$ sudo apt-get install git-lfs
+# Fedora / Red Hat
+$ sudo dnf install git-lfs
+# macOS
+$ brew install git-lfs
+```
+
+
+```shell
 git lts install
-git clone 
+git clone https://huggingface.co/bert-base-multilingual-uncased
 ```
 
 改名
