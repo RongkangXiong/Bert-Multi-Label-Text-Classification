@@ -3,6 +3,7 @@ import numpy as np
 import torch
 from ..common.tools import logger
 
+
 class ModelCheckpoint(object):
     """Save the model after every epoch.
     # Arguments
@@ -21,14 +22,15 @@ class ModelCheckpoint(object):
             be `min`, etc. In `auto` mode, the direction is
             automatically inferred from the name of the monitored quantity.
     """
+
     def __init__(self, checkpoint_dir,
                  monitor,
                  arch,
                  mode='min',
                  epoch_freq=1,
-                 best = None,
-                 save_best_only = True):
-        if isinstance(checkpoint_dir,Path):
+                 best=None,
+                 save_best_only=True):
+        if isinstance(checkpoint_dir, Path):
             checkpoint_dir = checkpoint_dir
         else:
             checkpoint_dir = Path(checkpoint_dir)
@@ -49,14 +51,14 @@ class ModelCheckpoint(object):
             self.monitor_op = np.greater
             self.best = -np.Inf
         # 这里主要重新加载模型时候
-        #对best重新赋值
+        # 对best重新赋值
         if best:
             self.best = best
 
         if save_best_only:
             self.model_name = f"BEST_{arch}_MODEL.pth"
 
-    def epoch_step(self, state,current):
+    def epoch_step(self, state, current):
         '''
         :param state: 需要保存的信息
         :param current: 当前判断指标
@@ -67,7 +69,7 @@ class ModelCheckpoint(object):
                 logger.info(f"\nEpoch {state['epoch']}: {self.monitor} improved from {self.best:.5f} to {current:.5f}")
                 self.best = current
                 state['best'] = self.best
-                best_path = self.base_path/ self.model_name
+                best_path = self.base_path / self.model_name
                 torch.save(state, str(best_path))
 
         else:
@@ -76,7 +78,7 @@ class ModelCheckpoint(object):
                 logger.info(f"\nEpoch {state['epoch']}: save model to disk.")
                 torch.save(state, str(filename))
 
-    def bert_epoch_step(self, state,current):
+    def bert_epoch_step(self, state, current):
         model_to_save = state['model']
         if self.save_best_only:
             if self.monitor_op(current, self.best):
@@ -88,7 +90,7 @@ class ModelCheckpoint(object):
                 with open(str(output_config_file), 'w') as f:
                     f.write(model_to_save.config.to_json_string())
                 state.pop("model")
-                torch.save(state,self.base_path / 'checkpoint_info.bin')
+                torch.save(state, self.base_path / 'checkpoint_info.bin')
 
         else:
             if state['epoch'] % self.epoch_freq == 0:

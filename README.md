@@ -70,7 +70,7 @@ you need download pretrained bert model and xlnet model.
 ### training 
 
 ```python
-python run_bert.py --do_train --save_best --do_lower_case --train_batch_size 64 --eval_batch_size 64
+python run_bert.py --do_train --save_best --do_lower_case --data_name goods_same_similar --train_batch_size 64 --eval_batch_size 64 --train_max_seq_len 512 --eval_max_seq_len 512
 ```
 
 
@@ -83,6 +83,7 @@ Epoch: 2 - loss: 0.0338 - val_loss: 0.0373 - val_auc: 0.9922
 ### training figure
 
 ![]( https://lonepatient-1257945978.cos.ap-chengdu.myqcloud.com/20190214210111.png)
+
 
 
 ### result

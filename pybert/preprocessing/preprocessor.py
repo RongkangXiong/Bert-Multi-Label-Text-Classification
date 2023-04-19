@@ -1,73 +1,74 @@
-#encoding:utf-8
+# encoding:utf-8
 import re
 
 replacement = {
-    "aren't" : "are not",
-    "can't" : "cannot",
-    "couldn't" : "could not",
-    "didn't" : "did not",
-    "doesn't" : "does not",
-    "don't" : "do not",
-    "hadn't" : "had not",
-    "hasn't" : "has not",
-    "haven't" : "have not",
-    "he'd" : "he would",
-    "he'll" : "he will",
-    "he's" : "he is",
-    "i'd" : "I would",
-    "i'll" : "I will",
-    "i'm" : "I am",
-    "isn't" : "is not",
-    "it's" : "it is",
-    "it'll":"it will",
-    "i've" : "I have",
-    "let's" : "let us",
-    "mightn't" : "might not",
-    "mustn't" : "must not",
-    "shan't" : "shall not",
-    "she'd" : "she would",
-    "she'll" : "she will",
-    "she's" : "she is",
-    "shouldn't" : "should not",
-    "that's" : "that is",
-    "there's" : "there is",
-    "they'd" : "they would",
-    "they'll" : "they will",
-    "they're" : "they are",
-    "they've" : "they have",
-    "we'd" : "we would",
-    "we're" : "we are",
-    "weren't" : "were not",
-    "we've" : "we have",
-    "what'll" : "what will",
-    "what're" : "what are",
-    "what's" : "what is",
-    "what've" : "what have",
-    "where's" : "where is",
-    "who'd" : "who would",
-    "who'll" : "who will",
-    "who're" : "who are",
-    "who's" : "who is",
-    "who've" : "who have",
-    "won't" : "will not",
-    "wouldn't" : "would not",
-    "you'd" : "you would",
-    "you'll" : "you will",
-    "you're" : "you are",
-    "you've" : "you have",
+    "aren't": "are not",
+    "can't": "cannot",
+    "couldn't": "could not",
+    "didn't": "did not",
+    "doesn't": "does not",
+    "don't": "do not",
+    "hadn't": "had not",
+    "hasn't": "has not",
+    "haven't": "have not",
+    "he'd": "he would",
+    "he'll": "he will",
+    "he's": "he is",
+    "i'd": "I would",
+    "i'll": "I will",
+    "i'm": "I am",
+    "isn't": "is not",
+    "it's": "it is",
+    "it'll": "it will",
+    "i've": "I have",
+    "let's": "let us",
+    "mightn't": "might not",
+    "mustn't": "must not",
+    "shan't": "shall not",
+    "she'd": "she would",
+    "she'll": "she will",
+    "she's": "she is",
+    "shouldn't": "should not",
+    "that's": "that is",
+    "there's": "there is",
+    "they'd": "they would",
+    "they'll": "they will",
+    "they're": "they are",
+    "they've": "they have",
+    "we'd": "we would",
+    "we're": "we are",
+    "weren't": "were not",
+    "we've": "we have",
+    "what'll": "what will",
+    "what're": "what are",
+    "what's": "what is",
+    "what've": "what have",
+    "where's": "where is",
+    "who'd": "who would",
+    "who'll": "who will",
+    "who're": "who are",
+    "who's": "who is",
+    "who've": "who have",
+    "won't": "will not",
+    "wouldn't": "would not",
+    "you'd": "you would",
+    "you'll": "you will",
+    "you're": "you are",
+    "you've": "you have",
     "'re": " are",
     "wasn't": "was not",
-    "we'll":" will",
-    "tryin'":"trying",
+    "we'll": " will",
+    "tryin'": "trying",
 }
 
+
 class EnglishPreProcessor(object):
-    def __init__(self,min_len = 2,stopwords_path = None):
+    def __init__(self, min_len=2, stopwords_path=None):
         self.min_len = min_len
         self.stopwords_path = stopwords_path
         self.reset()
 
-    def lower(self,sentence):
+    def lower(self, sentence):
         '''
         大写转化为小写
         :param sentence:
@@ -81,14 +82,13 @@ class EnglishPreProcessor(object):
         :return:
         '''
         if self.stopwords_path:
-            with open(self.stopwords_path,'r') as fr:
+            with open(self.stopwords_path, 'r') as fr:
                 self.stopwords = {}
                 for line in fr:
                     word = line.strip(' ').strip('\n')
                     self.stopwords[word] = 1
 
-
-    def clean_length(self,sentence):
+    def clean_length(self, sentence):
         '''
         去除长度小于min_len的文本
         :param sentence:
@@ -97,7 +97,7 @@ class EnglishPreProcessor(object):
         if len([x for x in sentence]) >= self.min_len:
             return sentence
 
-    def replace(self,sentence):
+    def replace(self, sentence):
         '''
         一些特殊缩写替换
         :param sentence:
@@ -111,7 +111,7 @@ class EnglishPreProcessor(object):
         sentence_repl = " ".join(words)
         return sentence_repl
 
-    def remove_website(self,sentence):
+    def remove_website(self, sentence):
         '''
         处理网址符号
         :param sentence:
@@ -123,12 +123,12 @@ class EnglishPreProcessor(object):
         sentence_repl = sentence_repl.replace(r"https", "")
         return sentence_repl
 
-    def remove_name_tag(self,sentence):
+    def remove_name_tag(self, sentence):
         # Remove name tag
         sentence_repl = sentence.replace(r"@\S+", "")
         return sentence_repl
 
-    def remove_time(self,sentence):
+    def remove_time(self, sentence):
         '''
         特殊数据处理
         :param sentence:
@@ -151,20 +151,20 @@ class EnglishPreProcessor(object):
             "")
         return sentence_repl
 
-    def remove_breaks(self,sentence):
+    def remove_breaks(self, sentence):
         # Remove line breaks
         sentence_repl = sentence.replace("\r", "")
         sentence_repl = sentence_repl.replace("\n", "")
         sentence_repl = re.sub(r"\\n\n", ".", sentence_repl)
         return sentence_repl
 
-    def remove_ip(self,sentence):
+    def remove_ip(self, sentence):
         # Remove phone number and IP address
         sentence_repl = sentence.replace(r'\d{8,}', "")
         sentence_repl = sentence_repl.replace(r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}', "")
         return sentence_repl
 
-    def adjust_common(self,sentence):
+    def adjust_common(self, sentence):
         # Adjust common abbreviation
         sentence_repl = sentence.replace(r" you re ", " you are ")
         sentence_repl = sentence_repl.replace(r" we re ", " we are ")
@@ -172,7 +172,7 @@ class EnglishPreProcessor(object):
         sentence_repl = sentence_repl.replace(r"@", "at")
         return sentence_repl
 
-    def remove_chinese(self,sentence):
+    def remove_chinese(self, sentence):
         # Chinese bad word
         sentence_repl = re.sub(r"fucksex", "fuck sex", sentence)
         sentence_repl = re.sub(r"f u c k", "fuck", sentence_repl)
@@ -184,7 +184,7 @@ class EnglishPreProcessor(object):
         sentence_repl = re.sub(r"肏你祖宗十八代", "your ancestors to the 18th generation", sentence_repl)
         return sentence_repl
 
-    def full2half(self,sentence):
+    def full2half(self, sentence):
         '''
         全角转化为半角
         :param sentence:
@@ -198,7 +198,7 @@ class EnglishPreProcessor(object):
                 ret_str += i
         return ret_str
 
-    def remove_stopword(self,sentence):
+    def remove_stopword(self, sentence):
         '''
         去除停用词
         :param sentence:

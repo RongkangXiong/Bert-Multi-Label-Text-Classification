@@ -119,6 +119,8 @@ class Trainer(object):
                     self.info[metric.name()] = metric.value()
             self.info['loss'] = loss.item()
             tr_loss.update(loss.item(), n=1)
+            # 写在tensorboard中去
+
             if self.verbose >= 1:
                 pbar(step=step, info=self.info)
             self.outputs.append(logits.cpu().detach())

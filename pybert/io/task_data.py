@@ -68,11 +68,12 @@ class TaskData(object):
         '''
         targets, sentences = [], []
         data = pd.read_csv(raw_data_path)
-        for row in data.values:
+        for row in tqdm(data.values):
             if is_train:
                 target = row[2:]
             else:
-                target = [-1, -1, -1, -1, -1, -1]
+                # target = [-1, -1, -1, -1, -1, -1]
+                target = [-1, -1]
             sentence = str(row[1])
             if preprocessor:
                 sentence = preprocessor(sentence)

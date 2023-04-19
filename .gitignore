@@ -112,3 +112,10 @@ venv.bak/
 /pybert/dataset/cached*
 /pybert/pretrain/bert/
 /pybert/output/
+/DataProcess/data/
+DataProcess/processed/
+# key
+/config/
+
+pybert/dataset/*
+
