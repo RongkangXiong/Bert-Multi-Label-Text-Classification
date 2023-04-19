@@ -1,3 +1,12 @@
+# 下载预训练模型
+进入 `cd ./pybert/pretrain/bert`,然后执行下载预训练模型
+
+```shell
+git lts install
+git clone 
+```
+
+改名
 
 
 # preprocess data.
@@ -34,6 +43,12 @@ python run_bert.py --do_test
 --eval_max_seq_len 512
 ```
 
+
+# service 启动
+
+```shell
+uvicorn services.app:app --reload --host 0.0.0.0 --workers 6
+```
 
 # 导出requirements
 ```shell

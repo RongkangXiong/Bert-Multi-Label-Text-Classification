@@ -1,9 +1,10 @@
 # --coding:utf-8--
 import os
+from typing import Optional
 
 import torch
 import uvicorn
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Header, Depends
 from pydantic import BaseModel
 from starlette.responses import HTMLResponse,  FileResponse
 from transformers import BertTokenizer
@@ -17,9 +18,11 @@ print(device)
 
 @app.on_event("startup")
 async def load_model():
-    global model, tokenizer
+    global model, tokenizer, api_key
     try:
         print("begin load model...")
+        # 从配置文件中读取API密钥
+        api_key = config['api_key']
         model = BertForMultiLable.from_pretrained(config['model_path'],
                                                   num_labels=config['num_labels']).to(device)
         tokenizer = BertTokenizer(config['vocab_path'], do_lower_case=config['do_lower_case'])
@@ -42,6 +45,14 @@ class Response(BaseModel):
     similar_prob: float
 
 
+async def get_api_key(apikey: str = Header(None)):
+    if apikey is None:
+        raise HTTPException(status_code=400, detail="API key missing")
+    elif apikey != api_key:
+        raise HTTPException(status_code=401, detail="Invalid API key")
+    return apikey
+
+
 @app.get("/", response_class=HTMLResponse)
 async def index():
     """Basic HTML response."""
@@ -49,7 +60,7 @@ async def index():
 
 
 @app.post("/predict")
-async def predict(input_text: Request):
+async def predict(input_text: Request, apikey: str = Depends(get_api_key)):
     global model, tokenizer
     str_a = input_text.goods_a
     str_b = input_text.goods_b

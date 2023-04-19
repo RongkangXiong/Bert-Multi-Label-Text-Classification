@@ -12,5 +12,6 @@ config = {
     'do_lower_case': True,
     'max_seq_len': 512,
     'log_path': Path['logs'],
-    'index': "./services/index.html"
+    'index': "./services/index.html",
+    "api_key": "123456"
 }
