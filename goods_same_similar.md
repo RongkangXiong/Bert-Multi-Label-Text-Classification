@@ -28,6 +28,10 @@ python run_bert.py --do_data --do_lower_case
 --train_max_seq_len=512 
 --eval_max_seq_len=512
 ```
+一行脚本：
+```shell
+python run_bert.py --do_data --do_lower_case --data_name goods_same_similar --train_batch_size=32 --eval_batch_size=128 --train_max_seq_len=512 --eval_max_seq_len=512
+```
 
 # training 
 
@@ -35,11 +39,16 @@ python run_bert.py --do_data --do_lower_case
 python run_bert.py --do_train --save_best 
 --do_lower_case 
 --data_name goods_same_similar 
---epochs=4 
+--epochs=6
 --train_batch_size=32 
 --eval_batch_size=128 
 --train_max_seq_len=512 
 --eval_max_seq_len=512
+```
+
+一行脚本：
+```shell
+python run_bert.py --do_train --save_best --do_lower_case --data_name goods_same_similar --epochs=6 --train_batch_size=32 --eval_batch_size=128 --train_max_seq_len=512 --eval_max_seq_len=512
 ```
 
 # test
@@ -48,7 +57,7 @@ python run_bert.py --do_train --save_best
 python run_bert.py --do_test 
 --do_lower_case 
 --data_name goods_same_similar 
---epochs 4 --train_batch_size 512 
+--epochs 6 --train_batch_size 512 
 --train_max_seq_len 512 
 --eval_max_seq_len 512
 ```
