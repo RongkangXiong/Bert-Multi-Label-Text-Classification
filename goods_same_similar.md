@@ -62,6 +62,10 @@ python run_bert.py --do_test
 --eval_max_seq_len 512
 ```
 
+一行脚本:
+```shell
+python run_bert.py --do_test --do_lower_case --data_name goods_same_similar --epochs 6 --train_batch_size 512 --train_max_seq_len 512 --eval_max_seq_len 512
+```
 
 # service 启动
 
