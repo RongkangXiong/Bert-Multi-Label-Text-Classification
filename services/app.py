@@ -22,7 +22,19 @@ async def load_model():
     try:
         print("begin load model...")
         # 从配置文件中读取API密钥
-        api_key = config['api_key']
+        try:
+            if os.environ.get('USEDOCKER') == 'True':
+                api_key = os.environ.get('APIKEY')
+                print("Using Docker APIKEY")
+            else:
+                api_key = config['api_key']
+                print("Using config APIKEY")
+            
+        except:
+            api_key = config['api_key']
+            print("Using config APIKEY")
+        
+        
         model = BertForMultiLable.from_pretrained(config['model_path'],
                                                   num_labels=config['num_labels']).to(device)
         tokenizer = BertTokenizer(config['vocab_path'], do_lower_case=config['do_lower_case'])

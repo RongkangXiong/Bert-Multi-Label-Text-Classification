@@ -1,0 +1,11 @@
+# comment
+.git
+.idea/*
+.vscode/*
+*/temp* 
+*/*/temp* 
+pybert/dataset/*
+DataProcess/data/
+DataProcess/processed/
+temp?
+!README.md

@@ -81,3 +81,12 @@ pip freeze > requirements_raw.txt
 ```shell
 python filter_dependencies.py requirements_raw.txt requirements.txt
 ```
+
+# docker build
+```shell
+nvidia-docker build -t goods_same_similar:v1.0 .
+```
+
+```shell
+sudo docker-compose up
+```

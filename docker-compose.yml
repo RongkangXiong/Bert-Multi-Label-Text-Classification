@@ -1,0 +1,12 @@
+version: "3.9"
+services:
+  app:
+    image: goods_same_similar:v1.0
+    environment:
+      - USEDOCKER='True'
+      - APIKEY='123456'
+    ports:
+      - "8000:8000"
+    volumes:
+      - /services/logs:/app/services/logs
+    restart: always
