@@ -69,6 +69,17 @@ python run_bert.py --do_test --do_lower_case --data_name goods_same_similar --ep
 
 # service 启动
 
+```
+uvicorn
+fastapi
+pip install transformers
+
+pip install -U scikit-learn
+pip install six
+pip install sentencepiece
+```
+
+
 ```shell
 uvicorn services.app:app --reload --host 0.0.0.0 --workers 6
 ```
@@ -84,7 +95,7 @@ python filter_dependencies.py requirements_raw.txt requirements.txt
 
 # docker build
 ```shell
-nvidia-docker build -t goods_same_similar:v1.0 .
+nvidia-docker build -t goods_same_similar:v1.1 .
 ```
 
 ```shell

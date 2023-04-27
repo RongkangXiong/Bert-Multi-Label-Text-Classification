@@ -24,9 +24,9 @@ def clean_string(s):
     Returns:
         str: 处理后的字符串
     """
-    s = s.replace(" ", "").replace("'", "").replace('"', '').replace(",", "").replace("，", "")  # 去除所有空格中英文逗号和引号
+    s = s.replace(" ", "").replace("'", "").replace('"', '').replace(",", "").replace("，", "").replace("(","").replace(")","").replace("（","").replace("）","")  # 去除所有空格中英文逗号和引号
     return s
 
 
-def join_prompt_strings(prompt: str = "对比相同和相似物资:", str_a: str = None, str_b: str = None):
+def join_prompt_strings(prompt: str = "对比相同和相似物资:", str_a: str = '', str_b: str = ''):
     return prompt + ",".join([clean_string(str_a), clean_string(str_b)])

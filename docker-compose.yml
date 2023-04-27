@@ -1,12 +1,13 @@
-version: "3.9"
+version: "1.0"
 services:
   app:
-    image: goods_same_similar:v1.0
+    image: goods_same_similar:v1.1
     environment:
       - USEDOCKER='True'
       - APIKEY='123456'
     ports:
       - "8000:8000"
     volumes:
-      - /services/logs:/app/services/logs
+      - ./services/:/app/services/
+    runtime: nvidia   # 将主机的 NVIDIA 驱动程序挂载到容器中
     restart: always

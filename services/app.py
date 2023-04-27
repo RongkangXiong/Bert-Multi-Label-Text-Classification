@@ -10,10 +10,11 @@ from starlette.responses import HTMLResponse,  FileResponse
 from transformers import BertTokenizer
 from pybert.model.bert_for_multi_label import BertForMultiLable
 from services.predict import data_predict
-from services.config import config
+from services.config import config,get_device
 
 app = FastAPI(title="goods same and similar probability")
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+device = get_device()
 print(device)
 
 @app.on_event("startup")

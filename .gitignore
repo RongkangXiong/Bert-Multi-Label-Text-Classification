@@ -114,6 +114,7 @@ venv.bak/
 /pybert/output/
 /DataProcess/data/
 /DataProcess/processed/
+DataProcess/dockerfile/
 # key
 /config/
 
